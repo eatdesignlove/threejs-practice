@@ -25,16 +25,23 @@
           1000
         );
         const renderer = new THREE.WebGLRenderer();
-        // renderer.setClearColorHex(0xEEEEEE);
         renderer.setClearColor(new THREE.Color(0xeeeeee, 1.0));
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMapEnabled = true;
 
-        const axes = new THREE.AxesHelper(20);
+        const axes = new THREE.AxesHelper(20); 
         scene.add(axes);
 
+        // 광원 추가
+        const spotLight = new THREE.SpotLight(0xffffff);
+        spotLight.position.set(-40, 60, -10);
+        spotLight.castShadow = true;
+        scene.add(spotLight);
+
         const planeGeometry = new THREE.PlaneGeometry(60, 20, 1, 1);
-        const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+        const planeMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.receiveShadow = true;
 
         plane.rotation.x = -0.5 * Math.PI;
         plane.position.x = 15;
@@ -43,11 +50,12 @@
         scene.add(plane);
 
         const cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
-        const cubeMetraial = new THREE.MeshBasicMaterial({
+        const cubeMetraial = new THREE.MeshLambertMaterial({
           color: 0xff0000,
-          wireframe: true
+          // wireframe: true
         });
         const cube = new THREE.Mesh(cubeGeometry, cubeMetraial);
+        cube.castShadow = true;
 
         cube.position.x = -4;
         cube.position.y = 3;
@@ -56,11 +64,12 @@
         scene.add(cube);
 
         const sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
-        const sphereMaterial = new THREE.MeshBasicMaterial({
+        const sphereMaterial = new THREE.MeshLambertMaterial({
           color: 0x7777ff,
-          wireframe: true
+          // wireframe: true
         });
         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphere.castShadow = true;
 
         sphere.position.x = 20;
         sphere.position.y = 4;
